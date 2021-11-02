@@ -1,0 +1,151 @@
+.game {
+  font-size: xx-large;
+  text-align: right;
+  margin: auto;
+  width: 1200px;
+  height: 600px;
+  background-color: skyblue;
+  border: 1px black solid;
+  overflow: hidden;
+}
+
+#character {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background: url("images/walking_new1.png");
+  animation: walk-east 2.5s steps(8) infinite;
+  left: 100px;
+}
+@keyframes walk-east {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: -960px;
+  }
+}
+
+.gift {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  background-image: url("images/gift.png");
+  background-size: 50px 50px;
+  top: 110px;
+}
+
+.stone {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-image: url("images/stone.png");
+  background-size: 100px 100px;
+  top: 285px;
+}
+
+.platform {
+  position: relative;
+  width: 1200px;
+  height: 110px;
+  background-image: url("images/platform.png");
+  background-size: 1500px 150px;
+  top: 380px;
+}
+
+.sun {
+  position: relative;
+  opacity: 0.8;
+  width: 100px;
+  height: 100px;
+  background-image: url("images/sun.png");
+  background-size: 100px 100px;
+  top: -220px;
+  left: 800px;
+}
+
+.cloud {
+  position: relative;
+  opacity: 0.5;
+  width: 200px;
+  height: 60px;
+  background-image: url("images/cloud.png");
+  background-size: 200px 60px;
+}
+
+.swords {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-image: url("images/swords.png");
+  background-size: 50px 50px;
+}
+.shurikens {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-image: url("images/shurikens.png");
+  background-size: 50px 50px;
+}
+.bombs {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-image: url("images/bombs.png");
+  background-size: 50px 50px;
+}
+.portals {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-image: url("images/portals.png");
+  background-size: 50px 50px;
+}
+
+.sword {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background-image: url("images/sword.png");
+  background-size: 80px 80px;
+  animation: 0.3s attack 1 linear;
+}
+
+@keyframes attack {
+  0% {
+    transform: rotate(0deg);
+  }
+  90% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.shuriken {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-image: url("images/shuriken.png");
+  background-size: 50px 50px;
+  animation: 1s rotate infinite linear;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bomb {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-image: url("images/bomb.png");
+  background-size: 50px 50px;
+  animation: 2.5s rotate infinite linear;
+}
