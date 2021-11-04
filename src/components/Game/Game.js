@@ -14,16 +14,24 @@ export default function Game() {
   const [sword, setSword] = useState(false);
   const [shuriken, setShuriken] = useState([]);
   const [bomb, setBomb] = useState([]);
-  const [swords, setSwords] = useState(0);
-  const [shurikens, setShurikens] = useState(0);
-  const [bombs, setBombs] = useState(0);
-  const [portals, setPortals] = useState(0);
+  const [portalIn, setPortalIn] = useState(false);
+  const [portalOut, setPortalOut] = useState(false);
+  const [swords, setSwords] = useState(5);
+  const [shurikens, setShurikens] = useState(5);
+  const [bombs, setBombs] = useState(5);
+  const [portals, setPortals] = useState(5);
   const [charY, setCharY] = useState(380);
+  const [charO, setCharO] = useState(1);
   const [jump, setJump] = useState(false);
 
   function hitOP() {
     stoneX.forEach((x) => {
-      if (x >= 140 && x <= 200 && charY >= 280 + 2 * Math.abs(150 - x)) {
+      if (
+        charO === 1 &&
+        x >= 140 &&
+        x <= 200 &&
+        charY >= 280 + 2 * Math.abs(150 - x)
+      ) {
         setStarted(false);
       }
     });
@@ -35,16 +43,16 @@ export default function Game() {
       const n = Math.floor(Math.random() * 4);
       switch (n) {
         case 0:
-          setSwords(swords + 5);
+          setSwords(swords + 1);
           break;
         case 1:
-          setShurikens(shurikens + 5);
+          setShurikens(shurikens + 1);
           break;
         case 2:
-          setBombs(bombs + 5);
+          setBombs(bombs + 1);
           break;
         case 3:
-          setPortals(portals + 5);
+          setPortals(portals + 1);
           break;
         default:
           break;
@@ -118,7 +126,7 @@ export default function Game() {
           if (!started && !start) {
             setStart(true);
           }
-          if (!jump && charY === 380) {
+          if (!jump && charY === 380 && charO !== 0) {
             setJump(true);
           }
           break;
@@ -141,20 +149,38 @@ export default function Game() {
           break;
         case 51:
           if (bombs) {
+            setBomb(
+              bomb.push({
+                x: 180,
+                y: -540 + charY,
+                x0: 180,
+                y0: -540 + charY,
+                t: 0
+              })
+            );
             setBombs(bombs - 1);
           }
-          setBomb(
-            bomb.push({
-              x: 180,
-              y: -540 + charY,
-              x0: 180,
-              y0: -540 + charY,
-              t: 0
-            })
-          );
           break;
         case 52:
-          if (portals) setPortals(portals - 1);
+          if (portals && charO === 1) {
+            setPortalIn(true);
+            setCharO(0);
+            setTimeout(() => {
+              setPortalIn(false);
+            }, 900);
+            setTimeout(() => {
+              setPortalOut(true);
+              setTimeout(() => {
+                setPortalOut(false);
+                setCharO(0.5);
+                setTimeout(() => {
+                  setCharO(1);
+                }, 3000);
+              }, 900);
+            }, 3000);
+            setPortals(portals - 1);
+          }
+
           break;
         default:
       }
@@ -174,14 +200,17 @@ export default function Game() {
         setScore(0);
         setStoneX([]);
         setCharY(380);
-        setSwords(0);
-        setShurikens(0);
-        setBombs(0);
-        setPortals(0);
+        setCharO(1);
+        setSwords(5);
+        setShurikens(5);
+        setBombs(5);
+        setPortals(5);
         setGiftX(-100);
+        setSword(false);
         setShuriken([]);
         setBomb([]);
-        setSword(false);
+        setPortalIn(false);
+        setPortalOut(false);
         setStart(false);
       }
       if (started) {
@@ -304,7 +333,8 @@ export default function Game() {
       <div
         id="character"
         style={{
-          top: charY
+          top: charY,
+          opacity: charO
         }}
       />
 
@@ -390,6 +420,8 @@ export default function Game() {
               }}
             />
           ))}
+        {portalIn && <div className="portalIn" />}
+        {portalOut && <div className="portalOut" />}
       </div>
     </div>
   );
